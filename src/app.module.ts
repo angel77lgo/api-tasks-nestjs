@@ -17,7 +17,7 @@ require('dotenv').config();
       database: process.env.MYSQL_DATABASE,
       entities: [Task],
       autoLoadEntities: true,
-      synchronize: false,
+      synchronize: true,
     }),
     TasksModule,
     CoreModule
