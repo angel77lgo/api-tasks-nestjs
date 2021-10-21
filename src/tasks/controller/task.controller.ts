@@ -24,7 +24,7 @@ export class TaskController {
 
 	@Post()
   	public async createTask( @Body() dto : CreateTaskDto ){
-		return this.taskService.createOne(dto)
+		return await this.taskService.createOne(dto)
 	}
 
   	@Put(':id')
@@ -46,8 +46,7 @@ export class TaskController {
 	  return {
 		message : `el usuario es  ${name} y la descripcion es `
 	  };
-	} 
-	*/
+	} */
 
 }	
 

@@ -13,7 +13,7 @@ const config: ConnectionOptions = {
   password: process.env.MYSQL_PASS,
   database: process.env.MYSQL_DATABASE,
   entities: [Task],
-  synchronize: false,
+  synchronize: true,
   namingStrategy: new SnakeNamingStrategy(),
   migrationsRun: true,
   logging: 'all',

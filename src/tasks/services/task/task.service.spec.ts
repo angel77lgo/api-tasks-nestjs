@@ -1,3 +1,4 @@
+import { Controller } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { assert } from 'console';
@@ -43,5 +44,12 @@ describe('TaskService', () => {
 
   it('get all task success', async () => {
     expect('').toEqual('');
+  })
+
+  it('get a task', async() =>{
+    const idTask = "e635dffc-f48f-42e7-b8de-f4a7f654ac81"
+    const savedId = await service.getOne(idTask)
+
+    expect(savedId).toEqual(idTask);
   })
 });

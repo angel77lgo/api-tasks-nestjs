@@ -27,10 +27,11 @@ export class TasksService {
     }
 
     public async editOne(id: number, dto : editTaskDto){
-        return{ ok : "edit one" }
+        return await this.taskRepository.update(id,dto)
     }
 
-    deleteOne(id: number){
-        return{ ok : "delete one" }
+    public async deleteOne(id: number){
+        //return{ ok : "delete one" }
+        return await this.taskRepository.delete(id)
     }
 }
