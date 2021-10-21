@@ -8,27 +8,29 @@ import { Task } from '../../models/task.entity';
 @Injectable()
 export class TaskService {
   constructor(
-    @InjectRepository(Task)
-    private readonly taskRepository: Repository<Task>
+    @InjectRepository(Task) private readonly taskRepository: Repository<Task>
   ) { }
 
   public async getMany(): Promise<Task[]> {
     return await this.taskRepository.find()
   }
 
-  async createOne(dto: CreateTaskDto): Promise<Task> {
+  public async createOne(dto: CreateTaskDto): Promise<Task> {
+    console.log(dto);
     return await this.taskRepository.save(dto)
   }
 
-  async getOne(id: string) {
+  public async getOne(id: string) {
+    console.log('asa')
     return await this.taskRepository.findOne(id)
   }
 
-  public async editOne(id: number, dto: editTaskDto) {
-    return { ok: "edit one" }
+  public async editOne(id: string, dto: editTaskDto) {
+    return await this.taskRepository.update(id, dto);
   }
 
-  deleteOne(id: number) {
-    return { ok: "delete one" }
+  public async deleteOne(id: string) {
+    console.log(id);
+    return await this.taskRepository.delete({id: id});
   }
 }

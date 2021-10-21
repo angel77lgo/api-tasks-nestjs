@@ -1,12 +1,13 @@
 import { Controller, Get, Post, Delete, Put , Body, Param, ParseIntPipe} from '@nestjs/common';
 import { CreateTaskDto } from '../dtos/createTask.dto';
 import { editTaskDto } from '../dtos/editTask.dto';
-import { TasksService } from '../services/tasks.service';
+import { TaskService } from '../services/task/task.service';
+
 
 @Controller('api/v1/task')	
 export class TaskController {
 
-	constructor( private readonly taskService : TasksService){}
+	constructor( private readonly taskService : TaskService){}
   	
   	@Get()
   	public async getTasks(){
@@ -23,20 +24,21 @@ export class TaskController {
   	}
 
 	@Post()
-  	public async createTask( @Body() dto : CreateTaskDto ){
+  	public async createTask(@Body() dto: CreateTaskDto ){
+		console.log('dto', dto);
 		return await this.taskService.createOne(dto)
 	}
 
   	@Put(':id')
   	public async editTask(
-		@Param('id', ParseIntPipe) id : number,
+		@Param('id') id : string,
 		@Body() dto : editTaskDto
 		){
 		return this.taskService.editOne(id, dto)
 	}
 
 	@Delete(':id')
-	public async deleteTask(@Param(':id', ParseIntPipe) id: number) {
+	public async deleteTask(@Param('id') id: string) {
 		return this.taskService.deleteOne( id )
 	}
 

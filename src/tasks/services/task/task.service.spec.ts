@@ -11,6 +11,24 @@ const mockTask = new CreateTaskDto();
 mockTask.name = 'TastTest';
 mockTask.description = 'Test';
 
+const taskGet = new Task();
+taskGet.id = 'e635dffc-f48f-42e7-b8de-f4a7f654ac81';
+taskGet.name = 'Tarea 1';
+taskGet.description = 'Mock Tarea 1';
+
+const task2 = new Task();
+task2.id = '364a9187-8956-4a9f-b285-a10b82cb4413'
+task2.name = 'Tarea 2';
+task2.description = 'Mock Tarea 2'
+
+let allTask: Task[] = []
+
+allTask.push(taskGet);
+allTask.push(task2);
+
+
+
+
 describe('TaskService', () => {
   let service: TaskService;
 
@@ -20,7 +38,11 @@ describe('TaskService', () => {
       {
         provide: getRepositoryToken(Task),
         useValue: {
-          save: jest.fn().mockResolvedValue(mockTask)
+          save: jest.fn().mockResolvedValue(mockTask),
+          findOne: jest.fn().mockResolvedValue(taskGet),
+          find: jest.fn().mockReturnValue(allTask),
+          delete: '',
+          update: ''
         }
       }],
     }).compile();
@@ -43,13 +65,26 @@ describe('TaskService', () => {
   })
 
   it('get all task success', async () => {
-    expect('').toEqual('');
+    
+    const find = await service.getMany();
+    console.log(find);
+    expect(find).toEqual(allTask)
+    
   })
 
-  it('get a task', async() =>{
+  it('get a task success', async() =>{
     const idTask = "e635dffc-f48f-42e7-b8de-f4a7f654ac81"
     const savedId = await service.getOne(idTask)
 
-    expect(savedId).toEqual(idTask);
+    expect(savedId.id).toEqual(idTask);
+  })
+
+  it('update task by id', async () => {
+
+  });
+
+
+  it('delete task by id', async () => {
+    
   })
 });
