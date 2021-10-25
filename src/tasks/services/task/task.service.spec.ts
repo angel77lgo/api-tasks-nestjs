@@ -3,6 +3,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { assert } from 'console';
 import { CreateTaskDto } from '../../dtos/createTask.dto';
+import { editTaskDto } from '../../dtos/editTask.dto';
 import { Task } from '../../models/task.entity';
 import { TaskService } from './task.service';
 
@@ -17,15 +18,24 @@ taskGet.name = 'Tarea 1';
 taskGet.description = 'Mock Tarea 1';
 
 const task2 = new Task();
-task2.id = '364a9187-8956-4a9f-b285-a10b82cb4413'
+task2.id = '364a9187-8956-4a9f-b285-a10b82cb4413';
 task2.name = 'Tarea 2';
-task2.description = 'Mock Tarea 2'
+task2.description = 'Mock Tarea 2';
 
 let allTask: Task[] = []
 
 allTask.push(taskGet);
 allTask.push(task2);
 
+const deleteTask = new Task();
+deleteTask.id = 'b09b3a7a-ccd8-4728-bc78-299c65d3ff9c';
+deleteTask.name = 'Task delete mock';
+deleteTask.description = 'mock delete task';
+
+const updateTask = new Task();
+updateTask.id = 'f671a59f-9e4d-4618-8800-bfa757a7ceda';
+updateTask.name = 'Task update mock';
+updateTask.description = 'mock update task';
 
 
 
@@ -41,8 +51,8 @@ describe('TaskService', () => {
           save: jest.fn().mockResolvedValue(mockTask),
           findOne: jest.fn().mockResolvedValue(taskGet),
           find: jest.fn().mockReturnValue(allTask),
-          delete: '',
-          update: ''
+          delete: jest.fn().mockReturnValue(deleteTask),
+          update: jest.fn().mockResolvedValue(updateTask),
         }
       }],
     }).compile();
@@ -80,11 +90,24 @@ describe('TaskService', () => {
   })
 
   it('update task by id', async () => {
+    const newTask = new editTaskDto();
+    newTask.name = "New Name of Task";
+    newTask.description = "New description";
 
+    const idTask = 'f671a59f-9e4d-4618-8800-bfa757a7ceda'
+
+    const updateData = await service.editOne( idTask, newTask)
+    const getTask = await service.getOne(idTask)
+    console.log(updateData)
+
+    expect(newTask.name).toEqual(getTask.name)  
   });
 
 
   it('delete task by id', async () => {
-    
+    const idDeleteTask = 'e93dccac-e3a7-4712-ab6e-58bcd4340b8a'
+    const deleteTask = await service.deleteOne(idDeleteTask)
+
+    expect(deleteTask).toEqual(deleteTask.affected = 1)
   })
 });
