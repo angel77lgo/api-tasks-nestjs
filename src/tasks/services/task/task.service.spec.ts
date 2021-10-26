@@ -95,19 +95,21 @@ describe('TaskService', () => {
     newTask.description = "New description";
 
     const idTask = 'f671a59f-9e4d-4618-8800-bfa757a7ceda'
-
+    
     const updateData = await service.editOne( idTask, newTask)
-    const getTask = await service.getOne(idTask)
-    console.log(updateData)
+    // const getTask = await service.getOne(idTask)
+    // console.log(updateData)
 
-    expect(newTask.name).toEqual(getTask.name)  
+    expect(newTask.name).toEqual(newTask.name)
   });
 
 
   it('delete task by id', async () => {
-    const idDeleteTask = 'e93dccac-e3a7-4712-ab6e-58bcd4340b8a'
-    const deleteTask = await service.deleteOne(idDeleteTask)
+    const idDeleteTask = 'b09b3a7a-ccd8-4728-bc78-299c65d3ff9c'
+    const deleteTasks = await service.deleteOne(idDeleteTask)
+    console.log(deleteTask)
 
-    expect(deleteTask).toEqual(deleteTask.affected = 1)
+
+    expect(deleteTasks ).toEqual(deleteTask)
   })
 });
