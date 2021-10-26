@@ -90,26 +90,23 @@ describe('TaskService', () => {
   })
 
   it('update task by id', async () => {
-    const newTask = new editTaskDto();
-    newTask.name = "New Name of Task";
-    newTask.description = "New description";
-
-    const idTask = 'f671a59f-9e4d-4618-8800-bfa757a7ceda'
+    // const newTask = new editTaskDto();
+    // newTask.name = "New Name of Task";
+    // newTask.description = "New description";
     
-    const updateData = await service.editOne( idTask, newTask)
+    const updateData: any = await service.editOne( updateTask.id, updateTask)
     // const getTask = await service.getOne(idTask)
     // console.log(updateData)
 
-    expect(newTask.name).toEqual(newTask.name)
+    expect(updateData.name).toEqual(updateTask.name)
   });
 
 
   it('delete task by id', async () => {
-    const idDeleteTask = 'b09b3a7a-ccd8-4728-bc78-299c65d3ff9c'
-    const deleteTasks = await service.deleteOne(idDeleteTask)
+    const deleteTasks: any = await service.deleteOne(deleteTask.id)
     console.log(deleteTask)
 
 
-    expect(deleteTasks ).toEqual(deleteTask)
+    expect(deleteTasks.id ).toEqual(deleteTask)
   })
 });
